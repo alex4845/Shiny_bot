@@ -36,7 +36,7 @@ def write_debet(debet, dat):
 def get_text_messages(message):
     a = str(message.text)
     st, s, stt = "Р", "", "П"
-    dat = str(date.today())
+    dat = date.today().strftime("%d-%m-%Y")
     if st in a:
         for el in a[a.index(st):]:
             if el.isdigit():
@@ -56,13 +56,13 @@ def get_text_messages(message):
             debet = int(s)
             write_debet(debet, dat)
     elif a == "Итого" or a == "итого":
-        bot.send_message(message.from_user.id, "С какой даты? (год-мес-чис)")
+        bot.send_message(message.from_user.id, "С какой даты? (чис-мес-год)")
         bot.register_next_step_handler(message, get_date1)
 
 def get_date1(message):
     global date1
     date1 = str(message.text)
-    bot.send_message(message.from_user.id, "По какую дату? (год-мес-чис)")
+    bot.send_message(message.from_user.id, "По какую дату? (чис-мес-год)")
     bot.register_next_step_handler(message, get_date2)
 
 def get_date2(message):
