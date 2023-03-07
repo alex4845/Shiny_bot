@@ -16,10 +16,9 @@ def write_credit(credit, dat):
                    (credit, dat))
     conn.commit()
     cursor.execute("SELECT * FROM list_1")
-    res = cursor.fetchall()
-    print("База расход")
-    for i in res:
-        print(i)
+    res = list(cursor.fetchall())
+    print("Добавлено в расход", res[-1])
+
 
 def write_debet(debet, dat):
     conn = sqlite3.connect('MAX_bot_table.db')
@@ -30,10 +29,8 @@ def write_debet(debet, dat):
                    (debet, dat))
     conn.commit()
     cursor.execute("SELECT * FROM list_2")
-    res = cursor.fetchall()
-    print("База доход")
-    for i in res:
-        print(i)
+    res = list(cursor.fetchall())
+    print("Добавлено в доход", res[-1])
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
