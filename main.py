@@ -32,9 +32,12 @@ def write_debet(debet, dat):
     res = list(cursor.fetchall())
     print("Добавлено в доход", res[-1])
 
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['text', 'photo'])
 def get_text_messages(message):
-    a = str(message.text)
+    if message.text == None:
+        a = str(message.caption)
+    else:
+        a = str(message.text)
     st, s, stt = "Р", "", "П"
     dat = date.today().strftime("%d-%m-%Y")
     if st in a:
@@ -72,9 +75,13 @@ def get_date2(message):
     cursor = conn.cursor()
     cursor.execute("SELECT SUM(credit) FROM list_1 WHERE date>=? AND date<=?", [(date1), (date2)])
     res = str(cursor.fetchall())
-    bot.send_message(message.from_user.id, f'Всего расход:  {res[2:-3]} руб')
+    ras = res[2:-3]
+    bot.send_message(message.from_user.id, f'Всего расходов:  {ras} руб')
     cursor.execute("SELECT SUM(debet) FROM list_2 WHERE date>=? AND date<=?", [(date1), (date2)])
     res1 = str(cursor.fetchall())
-    bot.send_message(message.from_user.id, f'Всего доход:  {res1[2:-3]} руб')
+    doh = res1[2:-3]
+    bot.send_message(message.from_user.id, f'Всего продаж на сумму:  {doh} руб')
+    res2 = int(doh) - int(ras)
+    bot.send_message(message.from_user.id, f'Прибыль:  {res2} руб')
 
 bot.polling(none_stop=True, interval=0)
