@@ -1,10 +1,9 @@
 import datetime
-
 import telebot
 from telebot import types
 import sqlite3
-
 from datetime import date
+
 bot = telebot.TeleBot('5921930950:AAFDGklrmWGIyrQyzywlcZKCQ2jV5DVolmw')
 
 def write_credit(credit, dat):
@@ -76,11 +75,11 @@ def get_date2(message):
     cursor.execute("SELECT SUM(credit) FROM list_1 WHERE date>=? AND date<=?", [(date1), (date2)])
     res = str(cursor.fetchall())
     ras = res[2:-3]
-    bot.send_message(message.from_user.id, f'Всего расходов:  {ras} руб')
     cursor.execute("SELECT SUM(debet) FROM list_2 WHERE date>=? AND date<=?", [(date1), (date2)])
     res1 = str(cursor.fetchall())
     doh = res1[2:-3]
     bot.send_message(message.from_user.id, f'Всего продаж на сумму:  {doh} руб')
+    bot.send_message(message.from_user.id, f'Всего расходов:  {ras} руб')
     res2 = int(doh) - int(ras)
     bot.send_message(message.from_user.id, f'Прибыль:  {res2} руб')
 
