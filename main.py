@@ -38,7 +38,7 @@ def get_text_messages(message):
     else:
         a = str(message.text)
     st, s, stt = "Р", "", "П"
-    dat = date.today().strftime("%d-%m-%Y")
+    dat = date.today().strftime("%Y-%m-%d")
     if st in a:
         for el in a[a.index(st):]:
             if el.isdigit():
@@ -63,13 +63,15 @@ def get_text_messages(message):
 
 def get_date1(message):
     global date1
-    date1 = str(message.text)
+    date_0 = str(message.text).split('-')
+    date1 = str(date_0[2]) + "-" + str(date_0[1]) + "-" + str(date_0[0])
     bot.send_message(message.from_user.id, "По какую дату? (чис-мес-год)")
     bot.register_next_step_handler(message, get_date2)
 
 def get_date2(message):
     global date2
-    date2 = str(message.text)
+    date_0 = str(message.text).split('-')
+    date2 = str(date_0[2]) + "-" + str(date_0[1]) + "-" + str(date_0[0])
     conn = sqlite3.connect('MAX_bot_table.db')
     cursor = conn.cursor()
     cursor.execute("SELECT SUM(credit) FROM list_1 WHERE date>=? AND date<=?", [(date1), (date2)])
