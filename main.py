@@ -1,4 +1,5 @@
-import datetime
+
+import time
 import telebot
 from telebot import types
 import sqlite3
@@ -42,6 +43,8 @@ def get_text_messages(message):
         if s != "":
             credit = int(s)
             bot.send_message(message.from_user.id, "Записано в расходы")
+            time.sleep(10)
+            bot.delete_message(message.chat.id, message.message_id + 1)
             write_credit(credit, dat)
     elif stt in a:
         for el in a[a.index(stt):]:
@@ -52,6 +55,8 @@ def get_text_messages(message):
         if s != "":
             debet = int(s)
             bot.send_message(message.from_user.id, "Продажа записана")
+            time.sleep(10)
+            bot.delete_message(message.chat.id, message.message_id + 1)
             write_debet(debet, dat)
     elif a == "Итого" or a == "итого":
         keyboard = types.InlineKeyboardMarkup(row_width=2)
