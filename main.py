@@ -5,7 +5,7 @@ from telebot import types
 import sqlite3
 from datetime import date
 
-bot = telebot.TeleBot('5917858144:AAHRyeAdLmAfuDsuZAAv5jUXs4U9cG3sa34')
+bot = telebot.TeleBot('5921930950:AAFDGklrmWGIyrQyzywlcZKCQ2jV5DVolmw')
 user_states = {}
 
 def write_credit(credit, dat):
